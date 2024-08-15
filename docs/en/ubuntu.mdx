@@ -1,0 +1,77 @@
+---
+mirrorId: ubuntu
+---
+
+import ConfigGenerator from '../../src/components/config-generator'
+
+export const ubuntuVersionMap = {
+    "24.04 LTS": "noble",
+    "23.04": "lunar",
+    "22.10": "kinetic",
+    "22.04 LTS": "jammy",
+    "20.04 LTS": "focal",
+    "18.04 LTS": "bionic",
+    "16.04 LTS": "xenial",
+    "14.04 LTS": "trusty",
+}
+
+export const GenUbuntuConfig = (version) => {
+    var ubuntuName = ubuntuVersionMap[version]
+    return `# The source image has been commented out by default to improve the speed of apt update. You can uncomment it if necessary.
+deb https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName} main restricted universe multiverse
+# deb-src https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName} main restricted universe multiverse
+deb https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName}-updates main restricted universe multiverse
+# deb-src https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName}-updates main restricted universe multiverse
+deb https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName}-backports main restricted universe multiverse
+# deb-src https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName}-backports main restricted universe multiverse
+deb https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName}-security main restricted universe multiverse
+# deb-src https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName}-security main restricted universe multiverse\n
+# Pre-release software sources are not recommended for enabling
+# deb https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName}-proposed main restricted universe multiverse
+# deb-src https://mirrors.idc.daocloud.io/ubuntu/ ${ubuntuName}-proposed main restricted universe multiverse`
+}
+
+export const defaultVersion = Object.keys(ubuntuVersionMap).find(x => x.indexOf("LTS") > 0);
+
+## Ubuntu Source Use Help
+
+### Address
+
+[https://mirrors.idc.daocloud.io/ubuntu/](https://mirrors.idc.daocloud.io/ubuntu/)
+
+### Description
+
+*Ubuntu* software sources
+
+### Included Architectures
+
+amd64(X86_64), i386
+
+### Included Versions
+
+All currently supported versions of *Ubuntu*, including development versions, are listed at [https://wiki.ubuntu.com/Releases](https://wiki.ubuntu.com/Releases)
+
+---
+
+### How to Use
+
+#### Method 1
+
+Under general conditions, replace the default *Ubuntu* source address `http://archive.ubuntu.com/` in the `/etc/apt/sources.list` file with `http://mirrors.idc.daocloud.io/`.
+
+You can use the following command:
+
+```shell
+sudo sed -i 's@//.*archive.ubuntu.com@//mirrors.idc.daocloud.io@g' /etc/apt/sources.list
+```
+
+Starting from *Ubuntu 24.04 LTS*, the DEB822 format is used instead of the traditional One-Line-Style format mentioned above. The corresponding file that needs to be modified is `/etc/apt/sources.list.d/ubuntu.sources`. Similarly, you can use the following command:
+
+```shell
+sudo sed -i 's/archive.ubuntu.com/mirrors.idc.daocloud.io/g' /etc/apt/sources.list.d/ubuntu.sources
+```
+
+#### Method 2
+
+Directly edit `/etc/apt/sources.list` (using `sudo`).
+<ConfigGenerator promptString="Please select your Ubuntu version:" versionList={Object.keys(ubuntuVersionMap)} defaultVersion={defaultVersion} configGen={GenUbuntuConfig} language="bash" />

@@ -1,0 +1,45 @@
+---
+mirrorId: alpine
+---
+
+## Alpine Image Usage Help
+
+### Address
+
+https://mirrors.idc.daocloud.io/alpine/
+
+### Description
+
+Alpine Linux Package Repository
+
+### Included Architectures
+
+x86_64
+
+### Usage Instructions
+
+Under normal circumstances, you can replace the default Alpine source address `http://dl-cdn.alpinelinux.org/` in the `/etc/apk/repositories` file with `http://mirrors.idc.daocloud.io/`.
+
+You may use the following command:
+
+```shell
+sed -i 's/dl-cdn.alpinelinux.org/mirrors.idc.daocloud.io/g' /etc/apk/repositories
+```
+
+Alternatively, you can directly edit the `/etc/apk/repositories` file. Below is the reference configuration for version v3.19:
+
+```text
+https://mirrors.idc.daocloud.io/alpine/v3.19/main
+https://mirrors.idc.daocloud.io/alpine/v3.19/community
+```
+
+You can also use `latest-stable` to point to the latest stable version:
+
+```text
+https://mirrors.idc.daocloud.io/alpine/latest-stable/main
+https://mirrors.idc.daocloud.io/alpine/latest-stable/community
+```
+
+### Note
+
+After changing the `/etc/apk/repositories` file, please run `apk update` to update the index for the changes to take effect.

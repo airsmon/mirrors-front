@@ -1,0 +1,49 @@
+---
+mirrorId: archlinux
+---
+
+## ArchLinux Mirror Usage Help
+
+### Address
+
+https://mirrors.idc.daocloud.io/archlinux/
+
+### Description
+
+Arch Linux software repository.
+
+### Supported Architectures
+
+i686, x86_64
+
+---
+
+### Usage Instructions
+
+Pacman prioritizes the servers in the `mirrorlist` based on their order, so to add a mirror, it should be placed at the very top of the file; you may also comment out all other mirrors.
+
+For detailed instructions on using mirrors for Arch Linux, please see the [official documentation](https://wiki.archlinux.org/title/mirrors).
+
+Edit `/etc/pacman.d/mirrorlist` and add the following at the very top of the file:
+
+```text
+Server = https://mirrors.idc.daocloud.io/archlinux/$repo/os/$arch
+```
+
+It is also recommended to enable the `archlinuxcn` repository. For information about the `archlinuxcn` repository, please check [archlinuxcn Mirror Usage Help](#/doc/archlinuxcn).
+
+### Note
+
+After modifying the `mirrorlist`, please update the package cache:
+
+```bash
+sudo pacman -Syyu
+```
+
+Using two `y` flags helps to avoid problems when switching from a corrupted mirror to a working one.
+
+If you switch from a newer mirror to an older one, the following command can be used to downgrade certain packages to prevent partial system updates:
+
+```bash
+sudo pacman -Syyuu
+```

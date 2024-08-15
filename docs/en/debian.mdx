@@ -1,0 +1,138 @@
+---
+mirrorId: debian
+---
+
+import ConfigGenerator from '../../src/components/config-generator'
+
+export const debianVersions = [
+    "bookworm", // 12
+    "bullseye", // 11
+    "buster",   // 10
+    "stretch",  // 9
+    "jessie",   // 8
+    "testing",  // next stable in development
+    "sid",      // unstable
+]
+
+export const GenDebianConfig = (version) => {
+    if (version === 'sid') { // unstable
+        return `# Source mirrors are commented out by default to improve apt update speed, uncomment if necessary
+deb https://mirrors.idc.daocloud.io/debian/ sid main contrib non-free non-free-firmware
+# deb-src https://mirrors.idc.daocloud.io/debian/ sid main contrib non-free non-free-firmware`
+    } else if (version === 'bullseye') { // 11
+        return `# Source mirrors are commented out by default to improve apt update speed, uncomment if necessary
+deb https://mirrors.idc.daocloud.io/debian/ ${version} main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian/ ${version} main contrib non-free
+deb https://mirrors.idc.daocloud.io/debian/ ${version}-updates main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian/ ${version}-updates main contrib non-free\n
+deb https://mirrors.idc.daocloud.io/debian/ ${version}-backports main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian/ ${version}-backports main contrib non-free\n
+deb https://mirrors.idc.daocloud.io/debian-security ${version}-security main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian-security ${version}-security main contrib non-free`
+    } else if (version === 'buster' || version === 'stretch') { // 9, 10
+        return `# Source mirrors are commented out by default to improve apt update speed, uncomment if necessary
+deb https://mirrors.idc.daocloud.io/debian/ ${version} main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian/ ${version} main contrib non-free
+deb https://mirrors.idc.daocloud.io/debian/ ${version}-updates main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian/ ${version}-updates main contrib non-free
+deb https://mirrors.idc.daocloud.io/debian/ ${version}-backports main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian/ ${version}-backports main contrib non-free
+deb https://mirrors.idc.daocloud.io/debian-security ${version}/updates main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian-security ${version}/updates main contrib non-free`
+    } else if (version === 'jessie') { // 8
+        return `# Source mirrors are commented out by default to improve apt update speed, uncomment if necessary
+deb https://mirrors.idc.daocloud.io/debian/ jessie main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian/ jessie main contrib non-free
+deb https://mirrors.idc.daocloud.io/debian/ jessie-updates main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian/ jessie-updates main contrib non-free
+deb https://mirrors.idc.daocloud.io/debian-security jessie/updates main contrib non-free
+# deb-src https://mirrors.idc.daocloud.io/debian-security jessie/updates main contrib non-free`
+    }
+    return `# Source mirrors are commented out by default to improve apt update speed, uncomment if necessary
+deb https://mirrors.idc.daocloud.io/debian/ ${version} main contrib non-free non-free-firmware
+# deb-src https://mirrors.idc.daocloud.io/debian/ ${version} main contrib non-free non-free-firmware
+deb https://mirrors.idc.daocloud.io/debian/ ${version}-updates main contrib non-free non-free-firmware
+# deb-src https://mirrors.idc.daocloud.io/debian/ ${version}-updates main contrib non-free non-free-firmware
+deb https://mirrors.idc.daocloud.io/debian/ ${version}-backports main contrib non-free non-free-firmware
+# deb-src https://mirrors.idc.daocloud.io/debian/ ${version}-backports main contrib non-free non-free-firmware
+deb https://mirrors.idc.daocloud.io/debian-security ${version}-security main contrib non-free non-free-firmware
+# deb-src https://mirrors.idc.daocloud.io/debian-security ${version}-security main contrib non-free non-free-firmware`
+}
+
+## Debian Mirror Usage Help
+
+### Address
+
+[https://mirrors.idc.daocloud.io/debian/](https://mirrors.idc.daocloud.io/debian/)
+
+### Description
+
+*Debian* repository source
+
+### Supported Architectures
+
+amd64(X86_64), i386, arm
+
+### Included Versions
+Debian Old Stable, Stable, Testing, Unstable (sid)
+
+The current Stable is Debian 12, codenamed Bookworm
+
+---
+
+### Usage Instructions
+
+#### Method One
+
+Under normal circumstances, simply replace the *Debian* default source address `http://deb.debian.org/` with `http://mirrors.idc.daocloud.io` in the `/etc/apt/sources.list` file.
+
+You can use the following command:
+
+```shell
+sudo sed -i 's/deb.debian.org/mirrors.idc.daocloud.io/g' /etc/apt/sources.list
+```
+
+For Debian 12 (bookworm) **container** images that start using the DEB822 format instead of the traditional One-Line-Style format mentioned above, you would need to modify the `/etc/apt/sources.list.d/debian.sources` file. You can also use the following command:
+
+```shell
+sudo sed -i 's/deb.debian.org/mirrors.idc.daocloud.io/g' /etc/apt/sources.list.d/debian.sources
+```
+
+#### Method Two
+
+Directly edit the /etc/apt/sources.list file (sudo is required). Below is the reference configuration content:
+<ConfigGenerator promptString="Please select your Debian version:" versionList={debianVersions} configGen={GenDebianConfig} language="bash" />
+
+Below is the reference configuration content for Debian 12 **container images** after modifying both Debian and Debian Security sources:
+
+```text
+Types: deb
+URIs: http://mirrors.idc.daocloud.io/debian
+Suites: bookworm bookworm-updates
+Components: main
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb
+URIs: http://mirrors.idc.daocloud.io/debian-security
+Suites: bookworm-security
+Components: main
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+```
+
+#### Note
+
+After you change the `sources.list` file, please run `sudo apt-get update` to update the index and apply the changes.
+
+In version 2.1.9 and later of apt, the HTTP Pipelining feature of apt seems to have some compatibility issues with Nginx servers, which may cause occasional Connection reset by peer errors when downloading large packages (such as system upgrades) from mirror sites (see Debian bug #973581).
+
+Currently, users can solve this problem by turning off the HTTP Pipelining feature. If you need to turn it off, you can add the `-o Acquire::http::Pipeline-Depth=0` parameter when using the `apt` command, or add the relevant settings to the apt system configuration with the following command:
+
+```bash
+echo "Acquire::http::Pipeline-Depth \"0\";" > /etc/apt/apt.conf.d/99nopipelining
+```
+
+If you encounter problems pulling from https sources, first use http sources and install:
+
+```bash
+sudo apt install apt-transport-https ca-certificates
+```

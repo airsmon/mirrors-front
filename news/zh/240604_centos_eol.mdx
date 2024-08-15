@@ -1,0 +1,55 @@
+---
+title: 关于 CentOS 停止维护的通知
+name: centos_EOL
+author: ZYH @ JCIOT Mirrors Team
+date: 2024-06-04
+---
+
+镜像站的CentOS公共镜像来源于CentOS官方，当CentOS停止维护后，我们将会同时停止对该操作系统的支持，不再提供软件更新和安全补丁。为了避免操作系统停止维护带来的影响，对于使用CentOS任何版本的用户，建议您在EOL之前采取相应的措施以持续获得软件更新和安全补丁。本文主要介绍CentOS操作系统停止维护的应对方案。
+
+## 背景信息
+2020年12月08日，CentOS官方宣布了停止维护CentOS的计划，并推出了CentOS Stream项目。更多信息，请参见[CentOS官方公告](https://blog.centos.org/2020/12/future-is-centos-stream/)和[FAQ](https://centos.org/distro-faq/)。
+
+CentOS 6已于 2020年11月30日停止维护（EOL），CentOS 8已于2021年12月31日停止维护（EOL），我们已同时停止对该操作系统的支持。
+
+CentOS 7将于**2024年06月30日**停止维护（EOL），届时将会同时停止对该操作系统的支持，我们会预留6个月缓存期至**2025年01月31日**，以帮助您进行过渡，过渡期满后我们将移除镜像。为了避免操作系统停止维护带来的影响，建议您在停止维护（EOL）之前采取相应的应对方案。
+
+## 可替代CentOS的操作系统
+
+### 与CentOS二进制兼容的操作系统
+
+> 二进制兼容性（Binary Compatibility）是指操作系统不需要重新编译程序代码就可以直接运行在另一个操作系统上编译的应用程序和软件。这意味着在重新部署环境时，无需因为接口的变化而重新编译应用程序和软件，从而节省了时间和资源，但是不保证BUG的兼容性。
+
+| 操作系统 | 简介 | 是否收费 | 支持 |
+| --- | --- | :---: | --- |
+|[Red Hat Enterprise Linux](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)|Red Hat Enterprise Linux是Red Hat公司提供的企业版操作系统，您需要付费使用并可以享受Red Hat的订阅服务。|涉及License费用|Red Hat原厂支持|
+|[CentOS Stream](https://www.centos.org/centos-stream/)|CentOS Stream是一个滚动升级的版本，由CentOS官方提供。|否|社区支持|
+|[Rocky Linux](https://rockylinux.org/)|Rocky Linux是一个社区化的企业级操作系统，位于Red Hat Enterprise Linux（RHEL）下游。Rocky Linux与CentOS一样，提供了适用于服务器的稳定版本，旨在作为CentOS完全兼容的替代版本。|否|社区支持|
+|[AlmaLinux](https://almalinux.org/)|AlmaLinux是CloudLinux团队宣布构建的一个稳定版CentOS社区分支。该操作系统实现了与Red Hat Enterprise Linux（RHEL）二进制文件的1:1兼容，并提供了不停机更换操作系统的能力。|否|社区支持|
+
+**我们推荐您迁移到Rocky Linux**
+
+### 其他操作系统
+
+| 操作系统 | 简介 | 是否收费 | 支持 |
+| --- | --- | :---: | --- |
+|[Ubuntu](https://ubuntu.com/)|Ubuntu是由Canonical开发的Linux发行版，用户可以基于Ubuntu安装图形化桌面，以便于使用。|否|社区支持|
+|[Debian](https://www.debian.org/)|Debian是一个流行的Linux操作系统，以其稳定性、安全性和自由软件原则而闻名。|否|社区支持|
+|[OpenSUSE](https://www.opensuse.org/)|OpenSUSE是一个基于Linux内核的操作系统，由OpenSUSE项目社区开发维护，并且得到了SUSE等公司的赞助。|否|社区支持|
+
+## 如何迁移操作系统和工作负载
+
+### 原地升级
+
+| 源操作系统 | 目标操作系统 | 操作方式 |
+| --- | --- | --- |
+| CentOS 7/8 | Red Hat Enterprise Linux | [使用Red Hat提供的Convert2RHEL工具](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/migration-process/convert2rhel) |
+| CentOS 7 | AlmaLinux 8 | [How do I migrate from CentOS 7 to AlmaLinux 8?](https://wiki.almalinux.org/FAQ.html#how-do-i-migrate-from-centos-7-to-almalinux-8) |
+| CentOS 8 | CentOS Stream 8 | [开始使用 CentOS Stream](https://www.redhat.com/zh/topics/linux/what-is-centos#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8) |
+| CentOS | Rocky Linux 8/9 | [How to migrate to Rocky Linux from CentOS](https://docs.rockylinux.org/guides/migrate2rocky/) |
+
+## 需要继续使用CentOS
+
+如果您因业务需求原因需要继续使用CentOS，并且需要使用CentOS系统中的一些安装包，需要切换操作系统的源。
+
+ * [CentOS Vault镜像使用帮助](https://mirrors.idc.daocloud.io/docs/centos-vault/)

@@ -1,0 +1,51 @@
+---
+mirrorId: rocky
+---
+
+## Rocky Linux Repository Usage Help
+
+### Address
+
+[https://mirrors.idc.daocloud.io/rocky/](https://mirrors.idc.daocloud.io/rocky/)
+
+### Description
+
+Rocky Linux software repository mirror.
+
+### Supported Architectures
+
+x86_64, aarch64
+
+### Included Versions
+
+8, 9
+
+---
+
+### Usage Instructions
+
+For Rocky Linux 8, use the following commands to replace the default configuration:
+
+```shell
+sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+    -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.idc.daocloud.io/rocky|g' \
+    -i.bak \
+    /etc/yum.repos.d/Rocky-AppStream.repo \
+    /etc/yum.repos.d/Rocky-BaseOS.repo \
+    /etc/yum.repos.d/Rocky-Extras.repo \
+    /etc/yum.repos.d/Rocky-PowerTools.repo
+```
+
+For Rocky Linux 9, use the following commands to replace the default configuration:
+
+```shell
+sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+    -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.idc.daocloud.io/rocky|g' \
+    -i.bak \
+    /etc/yum.repos.d/rocky-extras.repo \
+    /etc/yum.repos.d/rocky.repo
+```
+
+The above commands only replace the default enabled repositories. After replacing, please run `dnf makecache` to update the cache.
+
+> This document was written with reference to http://mirrors.ustc.edu.cn/help/rocky.html.

@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  web:
+    image: mirrors-front:0.0.1
+    restart: always
+    ports:
+      - 6001:9000
+    environment:
+      - TZ=Asia/Shanghai

@@ -1,0 +1,76 @@
+---
+mirrorId: nodejs-release
+---
+
+## Node Source Usage Help
+
+### Address
+
+[https://mirrors.idc.daocloud.io/nodejs-release/](https://mirrors.idc.daocloud.io/nodejs-release/)
+
+### Description
+
+Mirror for the Node.js repository, containing the content from https://nodejs.org/dist/
+
+### Usage Instructions
+
+You can manually select and download the required version, or you can use it in conjunction with version managers such as `n`, `nvm`, or `fnm`. The methods are as follows:
+
+#### n
+
+```bash
+# Set environment variable
+
+export NODE_MIRROR=https://mirrors.idc.daocloud.io/nodejs-release/
+
+# Then use n as usual
+
+sudo n stable
+```
+
+#### nvm
+
+```bash
+# Set environment variable
+
+export NVM_NODEJS_ORG_MIRROR=https://mirrors.idc.daocloud.io/nodejs-release/
+
+# Then use nvm as normal
+
+nvm install <version>
+```
+
+#### fnm
+
+```bash
+# Set environment variable
+
+export FNM_NODE_DIST_MIRROR=https://mirrors.idc.daocloud.io/nodejs-release/
+
+# Then use fnm as normal
+
+fnm install <version>
+```
+
+#### volta
+
+Create or edit `~/.volta/hooks.json` (Linux/MacOS), or `%LOCALAPPDATA%\Volta\hooks.json` (Windows), replacing its contents with:
+
+```json
+{
+    "node": {
+        "index": {
+            "template": "https://mirrors.idc.daocloud.io/nodejs-release/index.json"
+        },
+        "distro": {
+            "template": "https://mirrors.idc.daocloud.io/nodejs-release/v{{version}}/node-v{{version}}-{{os}}-{{arch}}.tar.gz"
+        }
+    }
+}
+```
+
+After this, you can use `volta` as normal:
+
+```bash
+volta install node@<version>
+```

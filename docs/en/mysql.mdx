@@ -1,0 +1,61 @@
+---
+mirrorId: mysql
+---
+
+## MySQL Source Use Help
+
+### Address
+
+[https://mirrors.idc.daocloud.io/mysql/](https://mirrors.idc.daocloud.io/mysql/)
+
+### Description
+
+Mirror for MySQL software repositories.
+
+### Included Versions
+
+Currently supported Linux distributions' MySQL APT/YUM packages (without debug symbols).
+
+The file directory structure is consistent with the upstream.
+
+### Usage Instructions
+
+For Debian/Ubuntu users, refer to the following commands:
+
+```bash
+## Please modify the version as needed, 8.0 and 5.7 are supported
+Mysql_version='8.0'
+source /etc/os-release && echo "deb https://mirrors.idc.daocloud.io/mysql/apt/${ID,,} ${VERSION_CODENAME} mysql-${Mysql_version} mysql-tools" > /etc/apt/sources.list.d/mysql-community.list
+## Update repository
+apt-get update
+```
+
+For RHEL7/Fedora 7 users, refer to the following commands:
+```bash
+## Please modify the version as needed, 8.0 and 5.7 are supported
+Mysql_version='8.0'
+cat <<EOT > /etc/yum.repos.d/mysql-community.repo
+[mysql-connectors-community]
+name=MySQL Connectors Community
+baseurl=https://mirrors.idc.daocloud.io/mysql/yum/mysql-connectors-community-el7-\$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+
+[mysql-tools-community]
+name=MySQL Tools Community
+baseurl=https://mirrors.idc.daocloud.io/mysql/yum/mysql-tools-community-el7-\$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+
+[mysql-8.0-community]
+name=MySQL 8.0 Community Server
+baseurl=https://mirrors.idc.daocloud.io/mysql/yum/mysql-${Mysql_version}-community-el7-\$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+EOT
+## Update repository cache
+yum makecache
+```

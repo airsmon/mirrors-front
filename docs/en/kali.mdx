@@ -1,0 +1,49 @@
+---
+mirrorId: kali
+---
+
+## Kali Mirror Usage Help
+
+### Address
+
+[https://mirrors.idc.daocloud.io/kali/](https://mirrors.idc.daocloud.io/kali/)
+
+### Description
+
+*Kali Linux* software repository.
+
+### Supported System Architectures
+
+amd64, armel, armhf, i386
+
+---
+
+### Usage Instructions
+
+#### Method 1
+
+Edit the `/etc/apt/sources.list` file and add the following entries at the top:
+
+```shell
+deb https://mirrors.idc.daocloud.io/kali kali-rolling main non-free contrib
+deb-src https://mirrors.idc.daocloud.io/kali kali-rolling main non-free contrib
+```
+
+#### Method 2
+Use the sed command to replace
+
+```shell
+sudo sed -i "s@http://http.kali.org/kali@https://mirrors.idc.daocloud.io/kali@g" /etc/apt/sources.list
+```
+
+### Note
+
+> After changing the `sources.list` file, please run `sudo apt-get update` to update the index and apply the changes.
+
+Since the Kali repository does not use the by-hash mechanism, consistency during synchronization cannot be guaranteed. If you run `apt update` during synchronization, you may see an error like this:
+
+```text
+E: Failed to fetch https://mirrors.idc.daocloud.io/kali/dists/kali-rolling/main/source/Sources.gz File has unexpected size (14593053 != 14592993). Mirror sync in progress?
+```
+
+If you encounter the above error, you will need to wait for the synchronization to complete before running `apt update` again.

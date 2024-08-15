@@ -1,0 +1,40 @@
+---
+title: Linux一键换源脚本发布，助您轻松切换镜像源
+name: change_mirror
+author: YF @ JCIOT Mirrors Team
+date: 2024-06-20
+---
+
+我们很高兴地宣布，基于GitHub项目[LinuxMirrors](https://github.com/SuperManito/LinuxMirrors)开发的全新Linux一键换源脚本正式发布！该脚本旨在帮助用户快速、便捷地切换Linux系统的镜像源，提高软件安装和更新的速度。
+
+## 一、脚本简介
+
+本脚本是基于GitHub项目[LinuxMirrors](https://github.com/SuperManito/LinuxMirrors)开发，适用于多种Linux发行版，如Ubuntu、Debian、CentOS等。通过一键操作，用户可以轻松将系统源切换至**道客镜像站**，从而提高软件安装和更新的速度。
+
+## 二、使用方法
+
+### 一键执行命令
+```bash
+# 使用curl
+bash <(curl -sSL http://mirrors.idc.daocloud.io/mirrors.sh)
+# 使用wget
+bash <(wget -qO- http://mirrors.idc.daocloud.io/mirrors.sh)
+
+## 以上使用任一方式均可
+```
+
+### 相关注意事项
+
+ 1. **需使用 `ROOT` 用户执行脚本**
+
+    切换命令为 `sudo -i` 或 `su root`，不同系统环境使用的命令不一样，因为有些系统没有在初始安装时为 `ROOT` 用户设置固定密码（例如Ubuntu）所以需要使用 `sudo` 指令来提权
+
+ 2. **建议使用 `SSH` 远程工具**
+
+    如果你使用的系统终端界面不支持 UTF-8 编码那么将无法正常显示中文内容，导致无法正确选择交互内容。
+
+### 注意事项
+
+ * 请确保您具有管理员权限运行脚本。
+ * 脚本运行过程中，请根据提示选择合适的镜像源。
+ * 如果在使用过程中遇到问题，请参考[项目官网](https://linuxmirrors.cn/)的文档或提交issue。

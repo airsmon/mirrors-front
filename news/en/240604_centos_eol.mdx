@@ -1,0 +1,55 @@
+---
+title: Notification Regarding the End of Life for CentOS
+name: centos_EOL
+author: ZYH @ JCIOT Mirrors Team
+date: 2024-06-04
+---
+
+The CentOS public mirrors provided by our mirror site are sourced from the official CentOS. Once CentOS ceases maintenance, we will also discontinue support for the operating system, no longer providing software updates and security patches. To avoid the impact of the operating system's end of life (EOL), users of any version of CentOS are advised to take appropriate measures before the EOL to continue receiving software updates and security patches. This document primarily introduces the response strategies for the end of CentOS operating system maintenance.
+
+## Background Information
+On December 8, 2020, the CentOS official announced plans to cease maintenance of CentOS and introduced the CentOS Stream project. For more information, please refer to the [CentOS Official Announcement](https://blog.centos.org/2020/12/future-is-centos-stream/) and [FAQ](https://centos.org/distro-faq/).
+
+CentOS 6 reached EOL on November 30, 2020, and CentOS 8 on December 31, 2021. We have simultaneously ceased support for these operating systems.
+
+CentOS 7 will reach EOL on **June 30, 2024**, at which time support for the operating system will also cease. We will reserve a six-month cache period until **Jan 31, 2025** to assist you with the transition. After the transition period, we will remove the mirrors. To avoid the impact of the operating system's EOL, it is recommended that you take appropriate response strategies before the EOL.
+
+## Alternative Operating Systems to CentOS
+
+### Operating Systems Binary Compatible with CentOS
+
+> Binary compatibility refers to the ability of an operating system to run compiled applications and software from another operating system without the need to recompile the program code. This means that when redeploying the environment, there is no need to recompile applications and software due to changes in interfaces, saving time and resources, but it does not guarantee compatibility of bugs.
+
+| Operating System | Description | Fee Involved | Support |
+| --- | --- | :---: | --- |
+|[Red Hat Enterprise Linux](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)|Red Hat Enterprise Linux is an enterprise-level operating system provided by Red Hat, which requires a fee and offers subscription services from Red Hat. | License fees | Official support from Red Hat |
+|[CentOS Stream](https://www.centos.org/centos-stream/)|CentOS Stream is a rolling release version provided by the CentOS official. | No | Community support |
+|[Rocky Linux](https://rockylinux.org/)|Rocky Linux is a community-driven enterprise-level operating system, downstream of Red Hat Enterprise Linux (RHEL). Like CentOS, Rocky Linux provides stable versions suitable for servers, aiming to be a fully compatible alternative to CentOS. | No | Community support |
+|[AlmaLinux](https://almalinux.org/)|AlmaLinux is a stable community fork of CentOS announced by the CloudLinux team. The operating system achieves 1:1 binary compatibility with Red Hat Enterprise Linux (RHEL) and offers the ability to switch operating systems without downtime. | No | Community support |
+
+**We recommend migrating to Rocky Linux**
+
+### Other Operating Systems
+
+| Operating System | Description | Fee Involved | Support |
+| --- | --- | :---: | --- |
+|[Ubuntu](https://ubuntu.com/)|Ubuntu is a Linux distribution developed by Canonical, where users can install a graphical desktop for ease of use. | No | Community support |
+|[Debian](https://www.debian.org/)|Debian is a popular Linux operating system known for its stability, security, and adherence to free software principles. | No | Community support |
+|[OpenSUSE](https://www.opensuse.org/)|OpenSUSE is a Linux-based operating system developed and maintained by the OpenSUSE project community, with sponsorship from companies like SUSE. | No | Community support |
+
+## How to Migrate Operating Systems and Workloads
+
+### In-place Upgrades
+
+| Source OS | Target OS | Method |
+| --- | --- | --- |
+| CentOS 7/8 | Red Hat Enterprise Linux | [Use the Convert2RHEL tool provided by Red Hat](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/migration-process/convert2rhel) |
+| CentOS 7 | AlmaLinux 8 | [How do I migrate from CentOS 7 to AlmaLinux 8?](https://wiki.almalinux.org/FAQ.html#how-do-i-migrate-from-centos-7-to-almalinux-8) |
+| CentOS 8 | CentOS Stream 8 | [Getting Started with CentOS Stream](https://www.redhat.com/zh/topics/linux/what-is-centos#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8) |
+| CentOS | Rocky Linux 8/9 | [How to migrate to Rocky Linux from CentOS](https://docs.rockylinux.org/guides/migrate2rocky/) |
+
+## Continuing to Use CentOS
+
+If you need to continue using CentOS due to business requirements and require the use of certain installation packages within the CentOS system, you will need to switch the source of the operating system.
+
+ * [CentOS Vault Mirror Usage Guide](https://mirrors.idc.daocloud.io/docs/centos-vault/)

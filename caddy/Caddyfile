@@ -1,0 +1,259 @@
+{
+	auto_https disable_redirects
+}
+(mirrorsite) {
+	@blockedBots {
+		header_regexp User-Agent (Amazonbot|Sogou|Baiduspider|Bytespider|bingbot)
+	}
+	handle /rocky/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors/
+			browse
+		}
+	}
+	handle /centos/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors/
+			browse
+		}
+	}
+	handle /epel/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors/
+			browse
+		}
+	}
+	handle /archlinux/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors/
+			browse
+		}
+	}
+	handle /archlinuxcn/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors/
+			browse
+		}
+	}
+	handle /kali/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors/
+			browse
+		}
+	}
+	handle /lyx/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors/
+			browse
+		}
+	}
+	handle /apache/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors/
+			browse
+		}
+	}
+	handle /kali-images/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /debian/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /debian-security/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /debian-cd/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /ubuntu/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors2/
+			browse
+		}
+	}
+	handle /ubuntu-releases/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /centos-vault/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /openjdk/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /Adoptium/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /alpine/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /manjaro/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /GNU/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /Adoptium/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /nodejs-release/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /github-release/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors2/
+			browse
+		}
+	}
+	handle /CTAN/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			index index.html
+			browse
+		}
+	}
+	handle /CPAN/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			index index.html
+			browse
+		}
+	}
+	handle /CRAN/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors2/
+			index index.html
+			browse
+		}
+	}
+	handle /mysql/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+			browse
+		}
+	}
+	handle /openeuler/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors2/
+			browse
+		}
+	}
+	handle /kubernetes/* {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors2/
+			browse
+		}
+	}
+	handle /jobs {
+		respond @blockedBots "Access Denied" 403
+		reverse_proxy 127.0.0.1:12345 {
+			header_up Host {http.reverse_proxy.upstream.hostport}
+			header_down Access-Control-Allow-Headers *
+			header_down Access-Control-Allow-Origin *
+		}
+	}
+	handle /1GB.bin {
+		respond @blockedBots "Access Denied" 403
+		file_server {
+			root /mirrors1/
+		}
+	}
+	handle /api/* {
+		respond @blockedBots "Access Denied" 403
+		reverse_proxy 127.0.0.1:7000 {
+			header_up Host {http.reverse_proxy.upstream.hostport}
+			header_down Access-Control-Allow-Headers *
+			header_down Access-Control-Allow-Origin *
+		}
+	}
+	handle_errors {
+		rewrite * /{err.status_code}.html
+		file_server {
+			root /usr/share/nginx/html/err/
+		}
+	}
+	file_server {
+		root /home/mirror/jcutmirror/caddy/
+		index index.html
+	}
+	log {
+		output file /var/log/caddy/access.log
+		format transform `{request>remote_ip} - {user_id} [{ts}] "{request>method} {request>uri} {request>proto}" {status} {size} "{request>headers>Referer>[0]}" "{request>headers>User-Agent>[0]}"` {
+			time_format "02/Jan/2006:15:04:05 -0700"
+		}
+	}
+}
+http://mirrors.jcut.edu.cn {
+	import mirrorsite
+}
+https://mirrors.jcut.edu.cn {
+	import mirrorsite
+	tls /etc/ssl/jcut.edu.cn.crt /etc/ssl/jcut.edu.cn.key
+}
