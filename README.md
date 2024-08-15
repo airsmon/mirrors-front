@@ -6,8 +6,11 @@
 All static files must be mapped to `/static/*`.  
 
 1.克隆仓库
+
 2.构建镜像
+
 3.运行镜像生成静态文件
+
 4.运行Caddy服务
 
 ## 特别感谢
